@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <textarea cols="10" rows="10" id="htmlValue"></textarea>
+    <button onclick="replaces();">替换</button>
+    <input id="btn1" type="button" onclick="sends();" value="发送" />
+    <div id="bodys"></div>
+</body>
+<script type="text/javascript" src="http://10.15.35.58:3000/jquery.js"></script>
+<script type="text/javascript">
+    // $(function() {
+    function replaces() {
+        console.log(document.getElementById('htmlValue').value);
+        document.getElementById('bodys').innerHTML = document.getElementById('htmlValue').value
+    }
+
+    function sends() {
+        let arr = []
+        let imgList = document.getElementsByTagName('img')
+        for (let i = 0; i < imgList.length; i++) {
+            // console.log(imgList[i].src);
+            arr.push(imgList[i].src)
+        }
+        $.ajax({
+            headers: {
+                'Content-Type': 'text/plain; charset=utf-8',
+            },
+            url: '/img',
+            type: 'POST',
+            timeout: 60000,
+            data: JSON.stringify(arr),
+            success: function() {},
+            error: function(err) {
+                //增加访问出错信息返回
+            },
+        })
+    }
+    // })
+</script>
+
+</html>
